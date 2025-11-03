@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Virtual environment
+virtualenv/
+.venv/env/
+
+# Dependencies
+/Users/royzalta/Documents/GitHub/isa-getgroups-service/requirements.txt
+
+# Environment variables
+.env
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+.Trashes
+Thumbs.db
