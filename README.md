@@ -1,1 +1,1 @@
-[to get you TELEGRAM_API_ID & the TELEGRAM_API_HASH, make sure to use this link: ](https://my.telegram.org/apps)
+to get you TELEGRAM_API_ID & the TELEGRAM_API_HASH, make sure to use [this link](https://my.telegram.org/apps)
