@@ -82,3 +82,5 @@ This script fetches keywords from a BigQuery table (`pwcnext-sandbox01.telegram.
 ```bash
 python src/batch_classify_from_bigquery.py
 ```
+
+<!-- Triggering CI/CD workflow -->
