@@ -2,29 +2,10 @@ from telethon import TelegramClient
 from telethon.tl import functions
 import os
 import argparse
-from dotenv import load_dotenv
 import google.generativeai as genai
 import json
 
-# Load environment variables from .env file
-load_dotenv()
-
-# Read API credentials from environment variables
-api_id = os.getenv('TELEGRAM_API_ID')
-api_hash = os.getenv('TELEGRAM_API_HASH')
-gemini_api_key = os.getenv('GEMINI_API_KEY')
-
-if not api_id or not api_hash:
-    raise ValueError("Please set the TELEGRAM_API_ID and TELEGRAM_API_HASH environment variables.")
-
-if not gemini_api_key:
-    raise ValueError("Please set the GEMINI_API_KEY environment variable.")
-
-# Initialize the Telegram client
-client = TelegramClient('anon', int(api_id), api_hash)
-
 # Configure the Gemini API
-genai.configure(api_key=gemini_api_key)
 model = genai.GenerativeModel('gemini-2.5-flash')
 
 async def classify_group_relevance(keyword, messages):
@@ -38,13 +19,10 @@ async def classify_group_relevance(keyword, messages):
     if not message_texts:
         return None, "No text in recent messages."
 
-    prompt = f"""
-    Based on the following messages from a Telegram group, is the group relevant to the keyword '{keyword}'?
-    Please provide your answer in JSON format with two keys: "is_relevant" (boolean) and "explanation" (a brief string).
-
-    Messages:
-    - {'\n- '.join(message_texts)}
-    """
+    prompt = "Based on the following messages from a Telegram group, is the group relevant to the keyword '" + keyword + "'?\n" \
+             "Please provide your answer in JSON format with two keys: \"is_relevant\" (boolean) and \"explanation\" (a brief string).\n\n" \
+             "Messages:\n" \
+             "- " + "\n- ".join(message_texts)
 
     try:
         response = model.generate_content(prompt)
@@ -108,12 +86,16 @@ async def main():
     parser.add_argument("keyword", type=str, help="The keyword to search for.")
     args = parser.parse_args()
 
-    async with client:
-        print(f"Searching and classifying groups with keyword: {args.keyword}")
-        results = await get_and_classify_groups(client, args.keyword)
-        print("\n--- Classification Results ---")
-        print(json.dumps(results, indent=2, ensure_ascii=False))
+    # This part of the code will not work without the client initialization.
+    # It is left here for reference, but should not be called directly.
+    # async with client:
+    #     print(f"Searching and classifying groups with keyword: {args.keyword}")
+    #     results = await get_and_classify_groups(client, args.keyword)
+    #     print("\n--- Classification Results ---")
+    #     print(json.dumps(results, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
     import asyncio
-    asyncio.run(main())
+    # The main function is no longer runnable as a standalone script.
+    # asyncio.run(main())
+    pass
