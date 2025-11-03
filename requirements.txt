@@ -2,3 +2,7 @@ telethon
 python-dotenv
 google-generativeai
 google-cloud-bigquery
+google-cloud-secret-manager
+fastapi
+uvicorn
+gunicorn
