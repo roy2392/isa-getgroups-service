@@ -2,6 +2,10 @@ from telethon import TelegramClient
 from telethon.tl import functions
 import os
 import argparse
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Read API credentials from environment variables
 api_id = os.getenv('TELEGRAM_API_ID')
