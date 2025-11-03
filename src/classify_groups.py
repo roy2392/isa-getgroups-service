@@ -60,10 +60,11 @@ async def classify_group_relevance(keyword, messages):
         return None, "An unexpected error occurred during classification."
 
 
-async def get_and_classify_groups(keyword):
+async def get_and_classify_groups(client, keyword):
     """
     Searches for public Telegram groups, fetches recent messages, and classifies them.
     """
+    classified_groups = []
     result = await client(functions.contacts.SearchRequest(
         q=keyword,
         limit=10
@@ -72,7 +73,7 @@ async def get_and_classify_groups(keyword):
     for chat in result.chats:
         group_title = getattr(chat, 'title', 'N/A')
         group_username = getattr(chat, 'username', 'N/A')
-        print(f"\n--- Group: {group_title} (@{group_username}) ---")
+        print(f"\n--- Processing Group: {group_title} (@{group_username}) ---")
 
         try:
             entity = await client.get_entity(chat)
@@ -84,11 +85,20 @@ async def get_and_classify_groups(keyword):
             else:
                 relevance, explanation = await classify_group_relevance(keyword, messages)
 
+            group_data = {
+                "group_id": str(chat.id),
+                "group_name": group_title,
+                "is_relevant": relevance,
+                "why_relavent": explanation
+            }
+            classified_groups.append(group_data)
             print(f"  Relevant to '{keyword}': {relevance}")
             print(f"  Explanation: {explanation}")
 
         except Exception as e:
             print(f"  Could not process group. Reason: {e}")
+    
+    return classified_groups
 
 async def main():
     """
@@ -100,7 +110,9 @@ async def main():
 
     async with client:
         print(f"Searching and classifying groups with keyword: {args.keyword}")
-        await get_and_classify_groups(args.keyword)
+        results = await get_and_classify_groups(client, args.keyword)
+        print("\n--- Classification Results ---")
+        print(json.dumps(results, indent=2, ensure_ascii=False))
 
 if __name__ == "__main__":
     import asyncio

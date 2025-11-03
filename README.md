@@ -33,6 +33,16 @@ This project provides Python scripts to interact with the Telegram API for searc
     pip install -r requirements.txt
     ```
 
+4.  **Google Cloud Authentication (for BigQuery script):**
+
+    To run the batch classification script, you need to authenticate with Google Cloud. The recommended way is to use the `gcloud` CLI.
+
+    ```bash
+    gcloud auth application-default login
+    ```
+
+    This command will open a browser window for you to log in to your Google account and authorize access.
+
 ## Usage
 
 ### 1. Search for Telegram Groups by Keyword
@@ -64,3 +74,11 @@ python src/classify_groups.py "your_keyword"
 ```
 
 Replace `"your_keyword"` with the term you want to search for.
+
+### 4. Batch Classify from BigQuery
+
+This script fetches keywords from a BigQuery table (`pwcnext-sandbox01.telegram.keys`) and runs the group classification for each keyword.
+
+```bash
+python src/batch_classify_from_bigquery.py
+```
