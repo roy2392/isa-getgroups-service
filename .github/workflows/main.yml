@@ -46,7 +46,8 @@ jobs:
         run: |
           terraform -chdir=terraform apply -auto-approve \
             -var="project_id=${{ secrets.GCP_PROJECT_ID }}" \
-            -var="image_url=${{ steps.build-and-push.outputs.image_url }}"
+            -var="image_url=${{ steps.build-and-push.outputs.image_url }}" \
+            -var="github_actions_sa=${{ secrets.WIF_SERVICE_ACCOUNT }}"
 
       - name: Get Cloud Run Service URL
         id: get-url

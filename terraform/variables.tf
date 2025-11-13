@@ -19,3 +19,8 @@ variable "image_url" {
   description = "The URL of the Docker image to deploy."
   type        = string
 }
+
+variable "github_actions_sa" {
+  description = "The GitHub Actions service account email that deploys the service."
+  type        = string
+}
