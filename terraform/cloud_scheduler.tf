@@ -7,7 +7,7 @@ resource "google_cloud_scheduler_job" "job" {
     uri = google_cloud_run_v2_service.main.uri
     http_method = "POST"
     oidc_token {
-      service_account_email = google_service_account.cloud_scheduler_sa.email
+      service_account_email = "telegram-groups-classifier-sa@pwcnext-sandbox01.iam.gserviceaccount.com"
     }
   }
 }
