@@ -63,7 +63,7 @@ jobs:
 
       - name: Test Cloud Run Service
         run: |
-          TOKEN=$(gcloud auth print-identity-token)
+          TOKEN=$(gcloud auth print-identity-token --impersonate-service-account=telegram-groups-classifier-sa@${{ secrets.GCP_PROJECT_ID }}.iam.gserviceaccount.com --audiences="${{ steps.get-url.outputs.service_url }}")
           RESPONSE=$(curl -s -o /dev/stderr -w "%{http_code}" -X POST -H "Authorization: Bearer $TOKEN" "${{ steps.get-url.outputs.service_url }}")
           if [ "$RESPONSE" -ne 200 ]; then
             echo "Health check failed with status code $RESPONSE"
