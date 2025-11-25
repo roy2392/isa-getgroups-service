@@ -63,9 +63,11 @@ async def get_and_classify_groups(client, keyword):
             else:
                 relevance, explanation = await classify_group_relevance(keyword, messages)
 
+            group_link = f"https://t.me/{group_username}" if group_username and group_username != 'N/A' else None
             group_data = {
                 "group_id": str(chat.id),
                 "group_name": group_title,
+                "group_link": group_link,
                 "is_relevant": relevance,
                 "why_relavent": explanation
             }
